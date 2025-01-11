@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Futatrack Minecraft Server</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        @font-face {
+            font-family: 'Minecraft';
+            src: url('Minecraft.ttf') format('truetype'); /* Укажите путь к вашему шрифту Minecraft.ttf */
+        }
+
+        body {
+            font-family: 'Minecraft', monospace;
+            background-image: url('https://media.discordapp.net/attachments/1159855284249346058/1211778064297148516/minecraft-bedrock-120-release-n8.png'); /* Замените на ваш фон */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: white;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: rgba(0, 0, 0, 0.5);
+            border: 4px solid #9933CC;
+            padding: 20px;
+            margin: 20px;
+            max-width: 800px;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(153, 51, 204, 0.7);
+            animation: fadeIn 2s;
+            position: relative;
+            z-index: 2;
+            border-radius: 10px;
+        }
+
+        h1 {
+            font-size: 3em;
+            color: #9933CC;
+            text-shadow: 2px 2px 3px #000000, 0 0 10px #9933CC;
+            margin-bottom: 20px;
+            animation: colorShift 5s infinite alternate;
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+        @media (max-width: 768px) {
+          h1{
+            font-size: 2em;
+          }
+          .container{
+             max-width: 95%;
+             margin: 10px;
+          }
+        }
+        @keyframes colorShift {
+            0% { color: #9933CC; }
+            50% { color: #CC66FF; }
+            100% { color: #660099; }
+        }
+
+        .ip-box {
+            background-color: rgba(0, 0, 0, 0.8);
+            border: 4px solid #CC99FF;
+            padding: 15px;
+            margin-bottom: 20px;
+            animation: pulse 3s infinite, glow 5s infinite alternate;
+            border-radius: 10px;
+        }
+
+        .ip-box p {
+            font-size: 1.5em;
+            color: #FFFFFF;
+            margin: 0;
+        }
+
+        .ip-box span {
+            font-size: 2em;
+            color: #CC99FF;
+            text-shadow: 0 0 5px #CC99FF;
+        }
+
+        .download-button, .discord-button {
+            background: linear-gradient(45deg, #9933CC, #CC66FF);
+            color: white;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: block;
+            width: max-content;
+            margin: 20px auto;
+            text-decoration: none;
+            box-shadow: 0 0 10px rgba(153, 51, 204, 0.7);
+        }
+
+        .download-button:hover, .discord-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(153, 51, 204, 0.9);
+            background: linear-gradient(45deg, #CC66FF, #9933CC);
+        }
+
+        /* Анимации */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes glow {
+            0% {
+                box-shadow: 0 0 10px rgba(204, 153, 255, 0.7);
+            }
+            100% {
+                box-shadow: 0 0 20px rgba(204, 153, 255, 1), 0 0 30px rgba(204, 153, 255, 0.5);
+            }
+        }
+        .glowing-text{
+            text-shadow: 0 0 10px rgba(204, 153, 255, 0.7);
+            animation: textGlow 5s infinite alternate;
+        }
+        @keyframes textGlow {
+            0% {
+                text-shadow: 0 0 10px rgba(204, 153, 255, 0.7);
+            }
+            100% {
+                text-shadow: 0 0 20px rgba(204, 153, 255, 1), 0 0 30px rgba(204, 153, 255, 0.5);
+            }
+        }
+
+        /* Спрайт и обводка */
+        .sprite-container {
+            position: absolute;
+            left: 90px;
+            bottom: 0px;
+            z-index: 3;
+        }
+
+        .sprite {
+            width: 60px; /* Размер спрайта */
+            height: auto;
+            filter: drop-shadow(0 0 10px rgba(255, 0, 255, 0.7)); /* Свечение */
+        }
+        @media (max-width: 768px) {
+          .sprite-container{
+            display: none;
+          }
+        }
+
+        /* Фон и частицы */
+        .background-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .background-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: inherit;
+            background-size: cover;
+            background-repeat: no-repeat;
+            z-index: 0;
+            animation: backgroundMove 20s linear infinite;
+        }
+
+        .background-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+
+        @keyframes backgroundMove {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        .server-info{
+          margin-bottom: 40px;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+</head>
+<body>
+    <div class="background-container">
+        <div class="background-image"></div>
+        <div class="background-overlay"></div>
+        <div id="particles-js"></div>
+    </div>
+    <div class="container">
+      <div class="sprite-container">
+        <img src="https://i.imgur.com/OyyCaTS.png" alt="Minecraft Sprite" class="sprite">
+      </div>
+        <h1>Futatrack</h1>
+        <div class="server-info">
+            <p class="glowing-text">This server is made by the <a href="https://discord.gg/Yh46EFRQQ2" target="_blank" style="color: #CC99FF; text-decoration: none;">Tempura</a> Discord community.</p>
+        </div>
+        <div class="ip-box">
+            <p>Server IP:</p>
+            <p><span>futatrack2.ddns.net</span></p>
+        </div>
+
+        <a href="https://workupload.com/start/4PtZRgnn654" class="download-button" target="_blank">Download Mods</a>
+      <a href="https://discord.gg/Yh46EFRQQ2" target="_blank" class="discord-button">Join Tempura Discord</a>
+    </div>
+
+    <script>
+        particlesJS("particles-js", {
+            "particles": {
+                "number": {
+                    "value": 80,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": ["#9933CC", "#CC66FF", "#660099"]
+                },
+                "shape": {
+                    "type": "circle",
+                    "stroke": {
+                        "width": 0,
+                        "color": "#000000"
+                    },
+                    "polygon": {
+                        "nb_sides": 5
+                    }
+                },
+                "opacity": {
+                    "value": 0.5,
+                    "random": false,
+                    "anim": {
+                        "enable": false,
+                        "speed": 1,
+                        "opacity_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "size": {
+                    "value": 3,
+                    "random": true,
+                    "anim": {
+                        "enable": false,
+                        "speed": 40,
+                        "size_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#9933CC",
+                    "opacity": 0.4,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 6,
+                    "direction": "none",
+                    "random": false,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false,
+                    "attract": {
+                        "enable": false,
+                        "rotateX": 600,
+                        "rotateY": 1200
+                    }
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": true,
+                        "mode": "repulse"
+                    },
+                    "onclick": {
+                        "enable": true,
+                        "mode": "push"
+                    },
+                    "resize": true
+                },
+                "modes": {
+                    "grab": {
+                        "distance": 400,
+                        "line_linked": {
+                            "opacity": 1
+                        }
+                    },
+                    "bubble": {
+                        "distance": 400,
+                        "size": 40,
+                        "duration": 2,
+                        "opacity": 8,
+                        "speed": 3
+                    },
+                    "repulse": {
+                        "distance": 200,
+                        "duration": 0.4
+                    },
+                    "push": {
+                        "particles_nb": 4
+                    },
+                    "remove": {
+                        "particles_nb": 2
+                    }
+                }
+            },
+            "retina_detect": true
+        });
+    </script>
+</body>
+</html>
