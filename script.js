@@ -64,7 +64,9 @@ function addPlayer(imageUrl, name, description) {
 addEventToGallery('https://i.imgur.com/fhX9FsJ.png', 'Создание Сервера командой Tempura');
 
 addBuilding('https://i.imgur.com/z8Srbdn.png', 'X: -305, Y: ~, Z: -540', 'Дом Данка', '_dankee');
-addBuilding('https://i.imgur.com/2qEU0UW.png', 'X: 350, Y: 80, Z: -150', 'Деревня имени Хуя', 'Нашел Дед');
+addBuilding('https://i.imgur.com/2qEU0UW.png', 'X: 350, Y: ~, Z: -150', 'Деревня имени Хуя', 'Нашел Дед');
+addBuilding('https://i.imgur.com/8ilcmTP.png', 'X: -300, Y: ~, Z: -1078', 'Деревня имени Хуя', 'Нашел Дед');
+
 
 addPlayer('https://api.mineatar.io/body/full/ea488872-935c-4b9c-b7c3-99ca4b1361fa?scale=16', 'wozimon', 'дед, Создатель Futatrack');
 addPlayer('https://api.mineatar.io/body/full/4776db4e-6560-4a5c-9aa5-317621ca3a38?scale=16', '_dankee', 'Строитель, Художник, Механик и бойфренд деда');
