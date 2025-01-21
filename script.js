@@ -27,11 +27,11 @@ function addBuilding(imageUrl, coordinates, description, author) {
     buildingItem.innerHTML = `
         <div class="building-item-image">
             <img src="${imageUrl}" alt="Изображение">
-            <span class="building-coordinates">${coordinates}</span>
+            <span class="building-coordinates">${coordinates.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</span>
         </div>
         <div class="building-description">
-            <h3>${description}</h3>
-            <p class="building-author">by ${author}</p>
+            <h3>${description.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</h3>
+            <p class="building-author">by ${author.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</p>
         </div>
     `;
     buildingsList.appendChild(buildingItem);
@@ -39,26 +39,26 @@ function addBuilding(imageUrl, coordinates, description, author) {
 
 // Функция для добавления игроков
 function addPlayer(imageUrl, name, description) {
-  const playerItem = document.createElement('div');
-  playerItem.classList.add('player-item');
-  playerItem.innerHTML = `
-      <img src="${imageUrl}" alt="Скин игрока ${name}">
-      <div class="player-info">
-          <p><b>${name}</b></p>
-          <p>${description.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</p>
-      </div>
-  `;
-    playerItem.addEventListener('click', () => {
-    // Закрываем карточку другого игрока
-        const activePlayer = document.querySelector('.player-item.active');
-        if (activePlayer && activePlayer !== playerItem) {
-        activePlayer.classList.remove('active');
-        }
-    // Открываем/закрываем карточку текущего игрока
-        playerItem.classList.toggle('active');
-    });
-    playersList.appendChild(playerItem);
-}
+    const playerItem = document.createElement('div');
+    playerItem.classList.add('player-item');
+    playerItem.innerHTML = `
+        <img src="${imageUrl}" alt="Скин игрока ${name.replace(/</g, '&lt;').replace(/>/g, '&gt;')}">
+        <div class="player-info">
+            <p><b>${name.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</b></p>
+            <p>${description.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</p>
+        </div>
+    `;
+      playerItem.addEventListener('click', () => {
+      // Закрываем карточку другого игрока
+          const activePlayer = document.querySelector('.player-item.active');
+          if (activePlayer && activePlayer !== playerItem) {
+          activePlayer.classList.remove('active');
+          }
+      // Открываем/закрываем карточку текущего игрока
+          playerItem.classList.toggle('active');
+      });
+      playersList.appendChild(playerItem);
+  }
 
 //Примеры
 addEventToGallery('https://i.imgur.com/fhX9FsJ.png', 'Создание Сервера командой Tempura');
@@ -91,9 +91,9 @@ function addTool(imageUrl, caption, link) {
     const toolItem = document.createElement('div');
     toolItem.classList.add('tool-item');
     toolItem.innerHTML = `
-        <img src="${imageUrl}" alt="${caption}">
-        <p>${caption}</p>
-        <a href="${link}" target="_blank" class="download-button">Перейти</a>
+        <img src="<span class="math-inline">\{imageUrl\}" alt\="</span>{caption}">
+        <p><span class="math-inline">\{caption\}</p\>
+<a href\="</span>{link}" target="_blank" class="download-button">Перейти</a>
     `;
     toolsList.appendChild(toolItem);
 }
@@ -103,20 +103,70 @@ addTool('image.jpg', 'Название инструмента', 'https://example
 */
 
 // Функция добавления гайда
-function addGuide(imageUrl, caption) {
+function addGuide(name, imageUrl, content) {
     const guideItem = document.createElement('div');
-    guideItem.classList.add('guides-item');
+    guideItem.classList.add('guide-item');
     guideItem.innerHTML = `
-        <img src="${imageUrl}" alt="${caption}">
-        <p>${caption}</p>
+        <div class="guide-item-image">
+            <img src="${imageUrl}" alt="Изображение">
+        </div>
+        <div class="guide-description">
+            <h3>${name}</h3>
+            <p></p>
+        </div>
+        <div class="guide-content">
+            ${content.map(el => {
+                if (el.type === 'text') {
+                    return `<div class="guide-content-element"><p>${el.value.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</p></div>`;
+                } else if (el.type === 'image') {
+                    return `<div class="guide-content-element"><img src="${el.value}" alt="Изображение"><p>${el.caption ? el.caption.replace(/</g, '&lt;').replace(/>/g, '&gt;') : ''}</p></div>`;
+                }
+            }).join('')}
+        </div>
     `;
-    guidesList.appendChild(guideItem);
-}
 
+    guideItem.addEventListener('click', () => {
+        const content = guideItem.querySelector('.guide-description p');
+        const guideContent = guideItem.querySelector('.guide-content');
+    
+        // Закрываем другие открытые гайды
+        const activeGuides = document.querySelectorAll('.guide-item.active');
+        activeGuides.forEach(activeGuide => {
+          if (activeGuide !== guideItem) {
+            activeGuide.classList.remove('active');
+            activeGuide.querySelector('.guide-description p').style.maxHeight = '0';
+            activeGuide.querySelector('.guide-content').style.maxHeight = '0';
+            activeGuide.querySelector('.guide-content').style.overflowY = 'hidden'; // Убираем скролл
+          }
+        });
+    
+        // Открываем/закрываем текущий гайд
+        guideItem.classList.toggle('active');
+        if (guideItem.classList.contains('active')) {
+          content.style.maxHeight = content.scrollHeight + 'px';
+          guideContent.style.maxHeight = guideContent.scrollHeight + 'px';
+          guideContent.style.overflowY = 'auto'; // Добавляем скролл если нужно
+        } else {
+          content.style.maxHeight = '0';
+          guideContent.style.maxHeight = '0';
+          guideContent.style.overflowY = 'hidden'; // Убираем скролл
+        }
+      });
+    
+      guidesList.appendChild(guideItem);
+    }
 //Пример добавления гайда
-/*
-addGuide('image.jpg', 'Название гайда');
-*/
+
+addGuide('Как зайти на сервер?', 'https://i.imgur.com/xxlyvmM.png', [
+    { type: 'text', value: 'Зайдите в майнкрафт Официальный/Пиратский' },
+    { type: 'image', value: 'https://i.imgur.com/KcuoYKl.jpeg', caption: 'майнкрафт' },
+    { type: 'text', value: 'Зайдите в майнкрафт Официальный/Пиратский' },
+    { type: 'text', value: 'Зайдите в ыфвфывфывй/Пиратский' },
+    { type: 'text', value: 'Зайдите в майнкрафт Официальный/Пиратский' },
+    { type: 'image', value: 'https://i.imgur.com/KcuoYKl.jpeg', caption: 'майнкрафт' },
+    { type: 'text', value: 'Зайдите в майнкрафт Официальный/Пиратский' },
+    { type: 'text', value: 'Зайдите в ыфвфывфывй/Пиратский' },
+  ]);
 
 // Переключение контента при клике на пункты меню
 menuItems.forEach(item => {
