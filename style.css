@@ -4,7 +4,7 @@ body {
     display: flex;
     min-height: 100vh;
     margin: 0;
-    overflow: hidden;
+    overflow-x: hidden; /* Убираем горизонтальный скролл */
 }
 
 .background {
@@ -395,14 +395,141 @@ body {
     font-size: 16px;
     font-family: inherit;
 }
-/* Стили для ползунка */
-.players-list-container {
-  margin-top: 20px;
+
+/* ... предыдущие стили ... */
+
+/* Стили для гайдов */
+.guides-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    overflow-y: auto;
+    max-height: 70vh;
+    padding-right: 10px;
+  }
+
+.guides-list::-webkit-scrollbar {
+    width: 8px;
 }
 
-/* Стили для секций "Инструменты" и "Гайды" */
-.tools-list,
-.guides-list {
+.guides-list::-webkit-scrollbar-track {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}
+
+.guides-list::-webkit-scrollbar-thumb {
+    background-color: #2ad9fd;
+    border-radius: 10px;
+    border: 2px solid rgba(0, 0, 0, 0.2);
+}
+
+.guide-item {
+    border: 2px solid #999999;
+    padding: 15px;
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.5);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.guide-item:not(.active) {
+  cursor: pointer;
+}
+
+.guide-item.active {
+    background-color: rgba(42, 217, 253, 0.2);
+    cursor: default;
+}
+
+.guide-item-image {
+    position: relative;
+    width: 50%;
+    align-self: center;
+}
+
+.guide-item-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    display: block;
+}
+
+.guide-description {
+    flex-grow: 1;
+}
+
+.guide-description h3 {
+    margin: 0 0 5px 0;
+    color: #2ad9fd;
+    text-align: center;
+}
+
+.guide-description p {
+    font-size: 14px;
+    margin: 0;
+    color: #ccc;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease-in-out;
+}
+
+.guide-item.active .guide-description p {
+    max-height: 500px; /* Достаточно для отображения текста */
+}
+
+.guide-content {
+    max-height: 0;
+    overflow: hidden; /* Скрываем контент по умолчанию */
+    transition: max-height 0.5s ease-in-out;
+  }
+  
+  .guide-item.active .guide-content {
+    max-height: none; /* Убираем ограничение по высоте */
+    overflow-y: auto; /* Разрешаем скролл при необходимости */
+  }
+
+.guide-content-element {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.guide-content-element img {
+    max-width: 60%;
+    height: auto;
+    border-radius: 8px;
+    display: block;
+}
+
+.guide-content-element p {
+    font-size: 12px; /* Уменьшаем размер шрифта */
+    color: #7c7c7c; /* Делаем цвет немного темнее */
+    margin: 5px 0 0 0;
+    text-align: center;
+}
+
+.guide-content-element p:first-child{
+    font-size: 14px;
+    color: #ccc;
+}
+
+/* Медиа-запрос для адаптации на узких экранах */
+@media (max-width: 768px) {
+    .guide-item-image {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    .guide-description h3{
+        text-align: center;
+    }
+}
+
+/* Стили для секций "Инструменты" */
+.tools-list{
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
@@ -417,23 +544,12 @@ body {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-.guides-item {
-    flex: 0 0 calc(50% - 20px);
-    border: 2px solid #999999;
-    padding: 10px;
-    border-radius: 10px;
-    background-color: rgba(0, 0, 0, 0.5);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-}
-
-.guides-item img,
 .tool-item img {
     width: 100%;
     height: auto;
     border-radius: 8px;
 }
 
-.guides-item p,
 .tool-item p {
     font-size: 14px;
     margin-top: 5px;
