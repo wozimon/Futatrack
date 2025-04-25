@@ -4,7 +4,7 @@ body {
     display: flex;
     min-height: 100vh;
     margin: 0;
-    overflow-x: hidden; /* Убираем горизонтальный скролл */
+    overflow-x: hidden;
 }
 
 .background {
@@ -103,25 +103,25 @@ body {
 }
 
 .download-button {
-    background-color: rgba(0, 0, 0, 0.5); /* Более прозрачный фон */
+    background-color: rgba(0, 0, 0, 0.5);
     color: #ffffff;
-    border: 2px solid #999999; /* Обводка */
+    border: 2px solid #999999;
     padding: 10px 20px;
     text-decoration: none;
     font-size: 18px;
     cursor: pointer;
-    border-radius: 10px; /* Более закругленные края */
+    border-radius: 10px;
     transition: all 0.3s ease;
     display: inline-block;
     margin-bottom: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); /* Тень для объема */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
     font-family: inherit;
 }
 
 .download-button:hover {
     background-color: rgba(42, 217, 253, 0.2);
     border-color: #2ad9fd;
-    transform: translateY(-2px); /* Приподнимаем кнопку при наведении */
+    transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(42, 217, 253, 0.5);
 }
 
@@ -175,7 +175,6 @@ body {
     display: block;
 }
 
-/* Стили для галереи событий */
 .gallery {
     display: flex;
     flex-wrap: wrap;
@@ -227,7 +226,6 @@ body {
     word-wrap: break-word;
 }
 
-/* Стили для списка сооружений */
 .buildings-list {
     display: flex;
     flex-direction: column;
@@ -305,7 +303,6 @@ body {
     color: #999;
 }
 
-/* Стили для списка игроков */
 .players-list {
     display: flex;
     flex-wrap: wrap;
@@ -364,7 +361,7 @@ body {
 }
 
 .player-item.active .player-info {
-    max-height: 500px; /* Достаточно большое значение, чтобы вместить описание */
+    max-height: 500px;
 }
 
 .player-info p {
@@ -377,12 +374,10 @@ body {
     background-color: rgba(42, 217, 253, 0.2);
 }
 
-/* Стили для строки поиска */
 .search-bar {
     margin-bottom: 20px;
-    /* Настраиваемая ширина */
     width: 65%; 
-    min-width: 250px; /* Минимальная ширина */
+    min-width: 250px;
 }
 
 .search-bar input {
@@ -396,9 +391,6 @@ body {
     font-family: inherit;
 }
 
-/* ... предыдущие стили ... */
-
-/* Стили для гайдов */
 .guides-list {
     display: flex;
     flex-direction: column;
@@ -477,18 +469,18 @@ body {
 }
 
 .guide-item.active .guide-description p {
-    max-height: 500px; /* Достаточно для отображения текста */
+    max-height: 500px;
 }
 
 .guide-content {
     max-height: 0;
-    overflow: hidden; /* Скрываем контент по умолчанию */
+    overflow: hidden;
     transition: max-height 0.5s ease-in-out;
   }
   
   .guide-item.active .guide-content {
-    max-height: none; /* Убираем ограничение по высоте */
-    overflow-y: auto; /* Разрешаем скролл при необходимости */
+    max-height: none;
+    overflow-y: auto;
   }
 
 .guide-content-element {
@@ -506,8 +498,8 @@ body {
 }
 
 .guide-content-element p {
-    font-size: 12px; /* Уменьшаем размер шрифта */
-    color: #7c7c7c; /* Делаем цвет немного темнее */
+    font-size: 12px;
+    color: #7c7c7c;
     margin: 5px 0 0 0;
     text-align: center;
 }
@@ -517,7 +509,6 @@ body {
     color: #ccc;
 }
 
-/* Медиа-запрос для адаптации на узких экранах */
 @media (max-width: 768px) {
     .guide-item-image {
         width: 100%;
@@ -528,7 +519,6 @@ body {
     }
 }
 
-/* Стили для секций "Инструменты" */
 .tools-list{
     display: flex;
     flex-wrap: wrap;
